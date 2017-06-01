@@ -1373,6 +1373,19 @@ if(RUBY_PLATFORM == 'java')
 
   # DCLP tests begin here
 
+  def test_dclp_149
+    # Leiden+ markup for text restored by comparison with parallel copy
+    foo = '[αβγ]_[αβγ]_'
+    bar = '<supplied reason="lost">αβγ</supplied><supplied evidence="parallel" reason="lost">αβγ</supplied>'
+    assert_equal_fragment_transform(foo, bar)
+    foo = '_[αβγ]_[αβγ]'
+    bar = '<supplied evidence="parallel" reason="lost">αβγ</supplied><supplied reason="lost">αβγ</supplied>'
+    assert_equal_fragment_transform(foo, bar)
+    foo = "π' [ἰα]_[τρ]_[ι]κῆς [ἀ]π̣ολ̣[είπε]σ"
+    bar = 'π\' <supplied reason="lost">ἰα</supplied><supplied evidence="parallel" reason="lost">τρ</supplied><supplied reason="lost">ι</supplied>κῆς <supplied reason="lost">ἀ</supplied><unclear>π</unclear>ο<unclear>λ</unclear><supplied reason="lost">είπε</supplied>σ'
+    assert_equal_fragment_transform foo, bar
+  end
+
   def test_dclp_177
     # specify corresp for a textpart div (e.g., fragment ID)
     foo = '<S=.grc<D=.1.column.#FR365<=foo=>=D>'
